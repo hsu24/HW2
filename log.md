@@ -1,0 +1,45 @@
+# Activity Log
+
+## Session Start: 2026-04-18
+- Initialized activity logging. I will keep track of our actions in this file.
+- **Task**: Fetch Weather forecast data via CWA API.
+  - **Action**: Created Python script `fetch_weather.py` using `requests` package.
+  - **Details**: Requested data from `https://opendata.cwa.gov.tw/fileapi/v1/opendataapi/F-A0010-001`. Filtered data for 台灣北部、中部、南部、東北部、東部及東南部地區.
+  - **Result**: Successfully extracted regions and formatted data using `json.dumps`. The full filtered dataset was saved to `weather_target_regions.json` and optionally `weather_data.json` for raw output.
+- **Task**: Export weather data to CSV.
+  - **Action**: Updated `fetch_weather.py` to flatten the extracted JSON structure.
+  - **Details**: Extracted the Location, Date, Weather condition, Max Temperature, and Min Temperature elements.
+  - **Result**: Successfully generated `weather_data.csv` with UTF-8 encoding.
+- **Task**: Save weather data to SQLite3 database.
+  - **Action**: Created Python script `database_operations.py`.
+  - **Details**: 
+    - Created SQLite3 database `data.db` with table `TemperatureForecasts`.
+    - Columns defined: `id`, `regionName`, `dataDate`, `mint`, and `maxt`.
+    - Implemented logic to read from `weather_data.csv` and populate the table.
+    - Verified data insertion by executing specific queries: listed all distinct region names and the temperature data for "中部地區" (Central Region).
+  - **Result**: Database is successfully loaded with values, and verification queries confirm correctness.
+- **Task**: Create Weather Forecast Web App to visualize data.
+  - **Action**: Created Streamlit application `app.py`.
+  - **Details**: 
+    - Using `streamlit` and `pandas` to provide a Web GUI.
+    - Integrated a dropdown selectbox querying distinct region names directly from SQLite `data.db`.
+    - Placed a dynamic line chart (`st.line_chart`) to visualize one-week minimum and maximum temperature trends.
+    - Added a static table (`st.dataframe`) next to it to list exact dates and temperatures.
+  - **Result**: The dashboard successfully reads from `data.db` and renders interactive charts and tables.
+- **Task**: Integrate Dynamic Taiwan Map using Folium.
+  - **Action**: Modified `app.py` and implemented `folium` elements.
+  - **Details**: 
+    - Auto-downloaded standard `taiwan.geojson` to draw county borders.
+    - Created a mapping dictionary to convert CWA API regions ("北部地區") into respective counties ("臺北市", "新北市" etc.).
+    - Created dual-tabs UI: `全台氣溫地圖 (空間)` and `地區趨勢分析 (時間)`.
+    - Placed a `Folium Choropleth` heat map on the first tab which dynamically changes color based on queried peak temperatures on a selected date. Fixed `cp950` UnicodeDecodeErrors encountered on Windows by explicitly parsing with `utf-8`.
+  - **Result**: The web app now features a fully interactive visual map parallel to the CWA site capabilities, deployed and running continuously.
+- **Task**: Restyle Web Layout.
+  - **Action**: Refactored `app.py`.
+  - **Details**: Overhauled the UI layout by removing the tab-based system, enforcing a side-by-side widget mapping logic in English resembling a provided mockup. Altered Folium map markers to use hollow yellow circular geographical indicators pointing to regional coordinates.
+  - **Result**: The UI now mirrors the exact reference architecture.
+- **Task**: Enhance UI Cosmetics.
+  - **Action**: Modified `app.py`.
+  - **Details**: Used `st.markdown` with embedded HTML styling schemas to colorize text headers, inserting appropriate emojis to make the interface feel more lively and polished.
+  - **Result**: Implemented colors `#1E88E5`, `#FF9800`, and `#4CAF50` strictly as formatting attributes on HTML elements.
+

@@ -1,0 +1,291 @@
+:root {
+    --bg-color: #A9B8B9;
+    --text-color: #111111;
+    --yellow: #DEFF1A;
+    --grid-color: rgba(255, 255, 255, 0.4);
+    --btn-bg: #1A1A1A;
+    --btn-text: #FFFFFF;
+    --marquee-bg: #EAE6CE;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Background grid */
+.grid-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 40px); /* stop at marquee, or over it */
+    z-index: -1;
+    pointer-events: none;
+}
+
+.grid-line {
+    position: absolute;
+    background-color: var(--grid-color);
+}
+
+.grid-line.vertical {
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+.grid-line.horizontal {
+    left: 0;
+    right: 0;
+    height: 1px;
+}
+
+.plus-mark {
+    position: absolute;
+    color: var(--yellow);
+    font-size: 26px;
+    font-weight: 500;
+    transform: translate(-50%, -50%);
+    line-height: 1;
+    user-select: none;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--grid-color);
+    position: relative;
+    z-index: 10;
+}
+
+.nav-left {
+    display: flex;
+    gap: 1.5rem;
+    flex: 1;
+}
+
+.nav-left a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+.nav-left a:hover {
+    opacity: 0.7;
+}
+
+.nav-center {
+    flex: 1;
+    text-align: center;
+}
+
+.nav-center .logo {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+}
+
+.nav-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav-right .profile-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    background-color: transparent;
+    transition: transform 0.2s;
+}
+
+.nav-right .profile-btn:hover {
+    transform: scale(1.1);
+}
+
+.profile-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Hero Section */
+.hero {
+    flex: 1;
+    position: relative;
+    padding-top: 6rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-title {
+    text-align: center;
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    margin-bottom: 2rem;
+    z-index: 2;
+}
+
+.hero-title .block {
+    display: block;
+}
+
+/* Bottom Content */
+.content-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+    padding: 2rem 5% 4rem 12.5%; /* aligns with left side */
+    z-index: 2;
+}
+
+.image-wrapper {
+    width: 320px;
+    aspect-ratio: 1/1;
+    position: relative;
+    /* Move to slightly left of the 25% line if needed, but 12.5% padding roughly centers it in the first column */
+    margin-left: max(0px, calc(12.5vw - 160px));
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.action-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    background: transparent;
+    max-width: 300px;
+    margin-right: max(0px, calc(12.5vw - 150px)); /* Align to right column */
+}
+
+.action-text {
+    font-size: 1.15rem;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.buy-tickets-btn {
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    border: none;
+    border-radius: 50px; /* Pill shape */
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.buy-tickets-btn:hover {
+    background-color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.arrow-icon {
+    color: var(--yellow);
+    font-size: 1.2rem;
+}
+
+/* Marquee */
+.marquee-container {
+    background-color: var(--marquee-bg);
+    border-top: 1px solid rgba(0,0,0,0.1);
+    overflow: hidden;
+    padding: 0.8rem 0;
+    white-space: nowrap;
+    position: relative;
+    z-index: 10;
+}
+
+.marquee-content {
+    display: inline-block;
+    animation: marquee 30s linear infinite;
+}
+
+.marquee-content span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    vertical-align: middle;
+    color: #333;
+}
+
+.marquee-content .plus {
+    color: var(--yellow);
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin: 0 1rem;
+    vertical-align: middle;
+    /* subtle shadow for yellow text */
+    text-shadow: 0.5px 0.5px 0px rgba(0,0,0,0.2);
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+    .content-bottom {
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
+        padding-bottom: 2rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    
+    .image-wrapper {
+        margin-left: 0;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .action-section {
+        margin-right: 0;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: clamp(3rem, 10vw, 5rem);
+    }
+}
