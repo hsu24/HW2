@@ -7,7 +7,8 @@ A data-driven web application that automates the extraction of weather data from
 You can view the live interactive web dashboard deployed on Streamlit Community Cloud here:
 👉 **[Live Streamlit Dashboard](https://hsu24-weather-hw2.streamlit.app/)**
 
-![App Dashboard Screenshot](./dashboard_snapshot.png)
+<img width="1829" height="835" alt="image" src="https://github.com/user-attachments/assets/51856e10-43b3-46c0-8b6e-35eacc7d76d1" />
+
 
 ---
 
